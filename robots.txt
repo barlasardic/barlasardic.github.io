@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://barlasardic.github.io/sitemap.xml

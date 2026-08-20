@@ -1,0 +1,21 @@
+{
+  "name": "Barlas Ardıç — Electronics & Audio Hardware Engineer",
+  "short_name": "BA - Electronics",
+  "description": "Portfolio of Barlas Ardıç — embedded systems, analog audio circuits, synthesizer hardware, x86 OS kernel development, MIDI/CV, and audio DSP.",
+  "start_url": "https://barlasardic.github.io/",
+  "display": "standalone",
+  "background_color": "#141F1A",
+  "theme_color": "#141F1A",
+  "icons": [
+    {
+      "src": "assets/pcbbb.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/pcbbb.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

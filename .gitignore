@@ -1,0 +1,13 @@
+# OS / file-system thumbnails
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor / IDE
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Logs
+*.log

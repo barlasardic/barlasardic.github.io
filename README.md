@@ -1,4 +1,4 @@
-# Barlas Ardıç — Portfolio Website
+# Barlas Ardıç Portfolio Website
 
 A cyber-analog portfolio site for electronics & audio hardware engineering work. Styled after real PCB materials: solder mask, FR4 substrate, copper traces, silkscreen, and phosphor.
 

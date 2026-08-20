@@ -1,0 +1,658 @@
+/* ═══════════════════════════════════════════════════════════════
+   "THE BENCH SHEET" — styles.css
+   Design identity grounded in real PCB materials:
+   solder mask, FR4 substrate, violet traces, silkscreen, phosphor.
+
+   Signature element: THE TRACE — a moving violet pulse. Everything
+   else is disciplined and quiet (150ms transitions max).
+
+   THEMING: All colors are CSS variables. :root = dark (default),
+   .light on <html> = light mode. Tailwind tokens reference these
+   variables, so every utility class swaps automatically.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ────────────────────────────────────────────────────────────────
+   THEME VARIABLES
+   ──────────────────────────────────────────────────────────────── */
+:root {
+  /* Dark mode (default) — solder-mask green-black bench */
+  --mask:      #141F1A;  /* page background */
+  --ink:       #0B120E;  /* card surface */
+  --solder:    #9BA6A0;  /* borders, muted text */
+  --copper:    #d16b6b;  /* primary accent (violet trace) */
+  --phosphor:  #8FBF7F;  /* status indicators */
+  --silk:      #EFEADB;  /* primary text */
+  --substrate: #E7DCBE;  /* panel insets */
+  --code-text: #C4CEC8;  /* code block body */
+  --code-comment: #6E7B74; /* code comments */
+}
+
+/* Light mode — same materials, daylight bench */
+.light {
+  --mask:      #E8EDE6;  /* light solder-mask green */
+  --ink:       #FFFFFF;  /* card surface */
+  --solder:    #5A6B62;  /* dark green-gray text */
+  --copper:    #ed613a;  /* deeper violet for contrast */
+  --phosphor:  #3E7C4F;  /* darker green for light bg */
+  --silk:      #1A241E;  /* dark green-black text */
+  --substrate: #E7DCBE;  /* tan stays */
+  --code-text: #2A352E;  /* code block body */
+  --code-comment: #6E7B74; /* code comments */
+}
+
+/* ────────────────────────────────────────────────────────────────
+   BASE / GLOBAL
+   ──────────────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Custom scrollbar — themed track, violet thumb */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ink);
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--solder) 40%, transparent);
+  border-radius: 6px;
+  border: 2px solid var(--ink);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--copper);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--copper) 40%, transparent);
+  color: var(--silk);
+}
+
+/* Smooth theme transition on color-bearing properties */
+body,
+header,
+footer,
+.module-card,
+.code-block,
+.img-placeholder,
+.demo-placeholder,
+.audio-player,
+.skill-bar,
+.btn-primary,
+.btn-secondary,
+.btn-ghost,
+.social-link,
+.logo-chip {
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-duration: 0.25s;
+  transition-timing-function: ease;
+}
+
+/* ────────────────────────────────────────────────────────────────
+   VIEW SYSTEM — hidden sections, fade-in animation
+   ──────────────────────────────────────────────────────────────── */
+.view {
+  display: none;
+}
+
+.view.active {
+  display: block;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ────────────────────────────────────────────────────────────────
+   SIGNAL-PATH LABELS — SIG-01/02/03 (home only)
+   Encodes the INPUT → PROCESS → OUTPUT story of the work
+   ──────────────────────────────────────────────────────────────── */
+.sig-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--copper);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.sig-label::after {
+  content: '';
+  height: 1px;
+  width: 2.5rem;
+  background: color-mix(in srgb, var(--copper) 50%, transparent);
+}
+
+/* ────────────────────────────────────────────────────────────────
+   THE TRACE — signature element
+   A violet line carrying a moving brightness pulse, like current
+   flowing through a PCB trace. Only animated thing on the site.
+   ──────────────────────────────────────────────────────────────── */
+.trace {
+  position: relative;
+  height: 2px;
+  background: color-mix(in srgb, var(--copper) 22%, transparent);
+  overflow: hidden;
+}
+
+.trace::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -25%;
+  width: 25%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--copper) 90%, transparent),
+    var(--silk),
+    transparent
+  );
+  animation: tracePulse 2.5s ease-in-out infinite;
+}
+
+@keyframes tracePulse {
+  0%   { left: -25%; }
+  100% { left: 100%; }
+}
+
+/* Trace variant on module-card hover — current sweeps the top edge */
+.module-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -30%;
+  width: 30%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--copper) 90%, transparent),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.module-card:hover::after,
+.module-card:focus-visible::after {
+  opacity: 1;
+  animation: traceSweep 1.2s ease-in-out forwards;
+}
+
+@keyframes traceSweep {
+  0%   { left: -30%; }
+  100% { left: 100%; }
+}
+
+/* ────────────────────────────────────────────────────────────────
+   GLOW EFFECTS — violet only, kept subtle
+   ──────────────────────────────────────────────────────────────── */
+.frame-glow {
+  box-shadow:
+    0 0 24px color-mix(in srgb, var(--copper) 18%, transparent),
+    0 0 72px color-mix(in srgb, var(--copper) 8%, transparent);
+  transition: box-shadow 0.3s ease;
+}
+
+.frame-glow:hover {
+  box-shadow:
+    0 0 32px color-mix(in srgb, var(--copper) 28%, transparent),
+    0 0 96px color-mix(in srgb, var(--phosphor) 8%, transparent);
+}
+
+/* Logo chip — phosphor glow on hover */
+.logo-chip {
+  transition: all 0.2s ease;
+}
+
+.group:hover .logo-chip {
+  border-color: var(--copper);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--phosphor) 35%, transparent);
+}
+
+/* ────────────────────────────────────────────────────────────────
+   STATUS INDICATOR — phosphor pulsing dot
+   ──────────────────────────────────────────────────────────────── */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--phosphor);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--phosphor) 70%, transparent);
+  animation: pulseStatus 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulseStatus {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.45; }
+}
+
+/* ────────────────────────────────────────────────────────────────
+   PCB CORNER REGISTRATION MARK
+   ──────────────────────────────────────────────────────────────── */
+.corner-mark {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 18px;
+  height: 18px;
+  border-top: 2px solid color-mix(in srgb, var(--phosphor) 60%, transparent);
+  border-left: 2px solid color-mix(in srgb, var(--phosphor) 60%, transparent);
+  pointer-events: none;
+}
+
+/* ────────────────────────────────────────────────────────────────
+   BUTTONS — quiet, 150ms transitions
+   ──────────────────────────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--copper);
+  color: var(--ink);
+  font-weight: 600;
+  padding: 0.7rem 1.4rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--copper);
+  transition: all 0.15s ease;
+}
+
+.btn-primary:hover {
+  background: transparent;
+  color: var(--copper);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--copper) 30%, transparent);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: var(--silk);
+  padding: 0.7rem 1.4rem;
+  border-radius: 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--solder) 40%, transparent);
+  transition: all 0.15s ease;
+}
+
+.btn-secondary:hover {
+  border-color: var(--phosphor);
+  color: var(--phosphor);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--phosphor) 16%, transparent);
+  transform: translateY(-2px);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.9rem;
+  border-radius: 0.5rem;
+  border: 1px solid transparent;
+  color: var(--solder);
+  transition: all 0.15s ease;
+}
+
+.btn-ghost:hover {
+  border-color: color-mix(in srgb, var(--solder) 40%, transparent);
+  color: var(--copper);
+  background: color-mix(in srgb, var(--ink) 60%, transparent);
+  transform: translateX(-3px);
+}
+
+/* ────────────────────────────────────────────────────────────────
+   MODULE CARDS — projects directory
+   ──────────────────────────────────────────────────────────────── */
+.module-card {
+  background: var(--ink);
+  border: 1px solid color-mix(in srgb, var(--solder) 25%, transparent);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+/* Static violet edge — the trace base */
+.module-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: color-mix(in srgb, var(--copper) 30%, transparent);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.module-card:hover,
+.module-card:focus-visible {
+  border-color: color-mix(in srgb, var(--copper) 60%, transparent);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px color-mix(in srgb, var(--copper) 12%, transparent);
+  outline: none;
+}
+
+.module-card:hover::before,
+.module-card:focus-visible::before {
+  opacity: 1;
+}
+
+/* Tech stack badges — phosphor tint */
+.tech-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--phosphor);
+  border: 1px solid color-mix(in srgb, var(--phosphor) 30%, transparent);
+  background: color-mix(in srgb, var(--phosphor) 5%, transparent);
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.375rem;
+  transition: all 0.15s ease;
+}
+
+.module-card:hover .tech-badge {
+  border-color: color-mix(in srgb, var(--copper) 50%, transparent);
+  color: var(--copper);
+  background: color-mix(in srgb, var(--copper) 7%, transparent);
+}
+
+/* ────────────────────────────────────────────────────────────────
+   CODE BLOCKS — firmware terminal styling
+   ──────────────────────────────────────────────────────────────── */
+.code-block {
+  background: var(--ink);
+  border: 1px solid color-mix(in srgb, var(--solder) 25%, transparent);
+  padding: 1.25rem 1.5rem;
+  overflow-x: auto;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--code-text);
+}
+
+.code-block code {
+  font-family: inherit;
+}
+
+.code-block .k { color: var(--copper); }
+.code-block .c { color: var(--code-comment); }
+.code-block .s { color: var(--phosphor); }
+
+/* ────────────────────────────────────────────────────────────────
+   IMAGE PLACEHOLDERS
+   ──────────────────────────────────────────────────────────────── */
+.img-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink);
+  border: 1px dashed color-mix(in srgb, var(--solder) 35%, transparent);
+  border-radius: 0.75rem;
+  color: var(--phosphor);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+}
+
+.img-placeholder:hover {
+  border-color: var(--copper);
+  color: var(--silk);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--copper) 10%, transparent);
+}
+
+/* ────────────────────────────────────────────────────────────────
+   AUDIO / VIDEO DEMO PLACEHOLDERS
+   ──────────────────────────────────────────────────────────────── */
+.demo-placeholder {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink);
+  border: 1px dashed color-mix(in srgb, var(--solder) 35%, transparent);
+  border-radius: 0.75rem;
+  color: var(--phosphor);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 1.5rem;
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+.demo-placeholder:hover {
+  border-color: var(--copper);
+  color: var(--silk);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--copper) 12%, transparent);
+}
+
+.demo-badge {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid color-mix(in srgb, var(--phosphor) 40%, transparent);
+  background: color-mix(in srgb, var(--phosphor) 6%, transparent);
+  color: var(--phosphor);
+}
+
+.demo-placeholder:hover .demo-badge {
+  border-color: color-mix(in srgb, var(--copper) 50%, transparent);
+  color: var(--copper);
+  background: color-mix(in srgb, var(--copper) 7%, transparent);
+}
+
+.demo-play {
+  font-size: 2rem;
+  color: var(--copper);
+  margin-bottom: 0.5rem;
+  animation: pulseStatus 2.5s ease-in-out infinite;
+}
+
+.demo-placeholder:hover .demo-play {
+  color: var(--phosphor);
+}
+
+/* ────────────────────────────────────────────────────────────────
+   ERROR TERMINAL — 404 view ("Signal lost")
+   A dashed terminal box consistent with cards / placeholders.
+   ──────────────────────────────────────────────────────────────── */
+.error-terminal {
+  background: var(--ink);
+  border: 1px dashed color-mix(in srgb, var(--copper) 40%, transparent);
+  border-radius: 1rem;
+  box-shadow:
+    0 0 24px color-mix(in srgb, var(--copper) 12%, transparent),
+    inset 0 0 24px color-mix(in srgb, var(--copper) 4%, transparent);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   KEYFRAME: fadeIn (reused from view animations)
+   ────────────────────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   REDUCED MOTION — accessibility
+   ────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  #loader {
+    transition: opacity 0ms !important;
+  }
+  #loader .text-6xl { animation: none; }
+  #loader .text-sm { animation: none; opacity: 1; transform: none; }
+}
+
+/* ────────────────────────────────────────────────────────────────
+   AUDIO PLAYERS — real <audio> controls, bench-themed
+   ──────────────────────────────────────────────────────────────── */
+
+.audio-player {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: var(--ink);
+  border: 1px dashed color-mix(in srgb, var(--solder) 35%, transparent);
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  transition: all 0.2s ease;
+}
+
+.audio-player:hover {
+  border-color: var(--copper);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--copper) 12%, transparent);
+}
+
+.audio-player .demo-badge {
+  position: static;
+  align-self: flex-start;
+}
+
+.audio-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--phosphor);
+}
+
+.audio-player audio {
+  width: 100%;
+  height: 36px;
+  outline: none;
+}
+
+/* Native audio control theming (WebKit/Blink) */
+.audio-player audio::-webkit-media-controls-panel {
+  background: var(--mask);
+}
+
+.audio-player audio::-webkit-media-controls-play-button,
+.audio-player audio::-webkit-media-controls-mute-button {
+  background-color: var(--copper);
+  border-radius: 50%;
+  color: var(--ink);
+}
+
+.audio-player audio::-webkit-media-controls-current-time-display,
+.audio-player audio::-webkit-media-controls-time-remaining-display {
+  color: var(--solder);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+}
+
+.audio-player audio::-webkit-media-controls-timeline {
+  background: color-mix(in srgb, var(--solder) 20%, transparent);
+  border-radius: 9999px;
+  height: 4px;
+}
+
+.audio-player audio::-webkit-media-controls-volume-slider {
+  background: color-mix(in srgb, var(--solder) 20%, transparent);
+  border-radius: 9999px;
+}
+
+/* ────────────────────────────────────────────────────────────────
+   SKILL BARS — Lab / About
+   ──────────────────────────────────────────────────────────────── */
+.skill-bar {
+  height: 6px;
+  background: var(--mask);
+  border-radius: 9999px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--solder) 30%, transparent);
+}
+
+.skill-fill {
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, var(--phosphor), var(--copper));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--copper) 30%, transparent);
+  transition: width 0.6s ease;
+}
+
+/* ────────────────────────────────────────────────────────────────
+   SCOPE GRATICULE — Lab page only
+   10×8 oscilloscope grid, phosphor-tinted, replacing generic graph paper
+   ──────────────────────────────────────────────────────────────── */
+.scope-grid {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--phosphor) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--phosphor) 6%, transparent) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ────────────────────────────────────────────────────────────────
+   SOCIAL LINKS — footer
+   ──────────────────────────────────────────────────────────────── */
+.social-link {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--solder) 30%, transparent);
+  background: var(--ink);
+  color: var(--solder);
+  transition: all 0.15s ease;
+}
+
+.social-link:hover {
+  border-color: var(--copper);
+  color: var(--copper);
+  transform: translateY(-2px);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--copper) 22%, transparent);
+}
+
+/* ────────────────────────────────────────────────────────────────
+   REDUCED MOTION — accessibility
+   ──────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}

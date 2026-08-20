@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Barlas Ardıç — Electronics & Audio Hardware Engineer</title>
+  <meta name="description" content="Portfolio of Barlas Ardıç — embedded systems, analog audio circuits, and music hardware." />
+
+  <!-- Google Fonts: IBM Plex Mono (firmware voice) — body/display uses Helvetica system stack -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Tailwind CSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <!-- Custom Tailwind Design Tokens — named after real bench materials.
+       Colors reference CSS variables so dark/light themes swap automatically. -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            mask:      'var(--mask)',      // page background
+            ink:       'var(--ink)',       // card surface
+            solder:    'var(--solder)',    // borders, muted text
+            copper:    'var(--copper)',    // primary accent
+            phosphor:  'var(--phosphor)',  // status indicators
+            silk:      'var(--silk)',      // primary text
+            substrate: 'var(--substrate)'  // panel insets
+          },
+          fontFamily: {
+            display: ['Helvetica', 'Arial', 'sans-serif'],
+            mono:    ['"IBM Plex Mono"', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="bg-mask text-silk font-display min-h-screen flex flex-col">
+
+  <!-- ══════════════════════════════════════════════════════════════
+       GLOBAL HEADER — sticky, always visible
+       ══════════════════════════════════════════════════════════════ -->
+  <header class="sticky top-0 z-50 bg-mask/90 backdrop-blur-md border-b border-solder/25">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+
+      <!-- Logo -->
+      <a href="#/home" data-target="home" class="nav-link flex items-center gap-3 group">
+        <span class="logo-chip w-9 h-9 rounded-md border border-solder/40 bg-ink flex items-center justify-center font-mono text-xs text-phosphor transition-all duration-200">
+          BA
+        </span>
+        <span class="font-display font-semibold tracking-widest text-sm uppercase">
+          Barlas Ardıç<span class="text-copper"></span>
+        </span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="flex items-center gap-6 font-mono text-xs tracking-wider uppercase text-solder">
+        <a href="#/home"     data-target="home"     class="nav-link hover:text-phosphor transition-colors duration-150">Home</a>
+        <a href="#/projects" data-target="projects" class="nav-link hover:text-phosphor transition-colors duration-150">Projects</a>
+        <a href="#/lab"      data-target="lab"      class="nav-link hover:text-phosphor transition-colors duration-150">Lab</a>
+        <a
+          href="https://github.com/barlas123321"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="w-8 h-8 rounded-md border border-solder/40 bg-ink flex items-center justify-center hover:border-copper hover:text-copper hover:-translate-y-0.5 transition-all duration-150"
+          aria-label="GitHub"
+        >
+          <i class="ph ph-github-logo text-lg"></i>
+        </a>
+        <!-- Dark / Light mode toggle -->
+        <button
+          id="theme-toggle"
+          class="w-8 h-8 rounded-md border border-solder/40 bg-ink flex items-center justify-center hover:border-copper hover:text-copper hover:-translate-y-0.5 transition-all duration-150"
+          aria-label="Toggle dark / light mode"
+          title="Toggle theme"
+        >
+          <i id="theme-icon" class="ph ph-moon text-lg"></i>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       MAIN CONTENT — SPA views (only one visible at a time)
+       ══════════════════════════════════════════════════════════════ -->
+  <main class="flex-1 w-full max-w-6xl mx-auto px-6 py-12">
+
+    <!-- ────────────────────────────────────────────────────────────
+         VIEW 1 : HOME — the signal chain (IN → PROCESS → OUT)
+         ──────────────────────────────────────────────────────────── -->
+    <section id="home" data-view="home" class="view">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+        <!-- SIG-01 · INPUT — the maker -->
+        <div>
+          <p class="sig-label mb-5">SIG-01 · Input</p>
+          <div class="relative max-w-sm mx-auto lg:mx-0 w-full">
+            <div class="frame-glow rounded-xl p-2 bg-ink border border-solder/40">
+              <div class="rounded-lg overflow-hidden aspect-square bg-ink relative">
+                <img
+                  src= "assets/20260130_120053.jpg"
+                  alt="Barlas Ardıç at the workbench"
+                  class="w-full h-full object-cover opacity-90"
+                />
+                <!-- Corner registration marks (PCB vibe) -->
+                <span class="corner-mark"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SIG-02 · PROCESS — the work -->
+        <div>
+          <p class="sig-label mb-5">SIG-02 · Process</p>
+          <p class="font-mono text-xs text-phosphor tracking-widest uppercase mb-4">
+            > Embedded Systems · Analog Audio · Music Hardware
+          </p>
+          <h1 class="font-display font-bold text-4xl sm:text-5xl lg:text-6xl leading-tight">
+            Bridging the gap between <span class="text-copper">raw code</span> and
+            <span class="text-phosphor">analog sound</span>.
+          </h1>
+          <p class="mt-6 text-solder text-lg leading-relaxed max-w-xl">
+            I'm <span class="text-silk font-semibold">Barlas Ardıç</span>, a 17 year-old aspiring electronics engineer and synthesizer / music  enthusiast.
+            I design circuits, write firmware, and solder my way through
+            synthesizers, MIDI interfaces, and audio DSP. I am also interested in embedded systems, operating systems, and low-level programming. 
+            My work is a blend of software and hardware, where I strive to create seamless interactions between the two domains.
+          </p>
+
+          <!-- CTA to Projects view -->
+          <div class="mt-8 flex flex-wrap items-center gap-4">
+            <a
+              href="#/projects"
+              data-target="projects"
+              class="btn-primary font-mono text-sm tracking-widest uppercase"
+            >
+              View Projects <i class="ph ph-arrow-right ml-2"></i>
+            </a>
+            <a
+              href="#/lab"
+              data-target="lab"
+              class="btn-secondary font-mono text-sm tracking-widest uppercase"
+            >
+              Enter the Lab
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- The Trace — signature element: current flowing from PROCESS to OUTPUT -->
+      <div class="trace my-12" aria-hidden="true"></div>
+
+      <!-- SIG-03 · OUTPUT — what comes out of the bench -->
+      <p class="sig-label mb-5">SIG-03 · Output</p>
+      <div class="border-t border-solder/25 pt-6 grid grid-cols-2 sm:grid-cols-4 gap-4 font-mono text-[11px] tracking-widest text-solder uppercase">
+        <div class="flex items-center gap-2"><span class="text-phosphor">●</span> C / C++ Firmware</div>
+        <div class="flex items-center gap-2"><span class="text-phosphor">●</span> Analog Signal Chain</div>
+        <div class="flex items-center gap-2"><span class="text-phosphor">●</span> MIDI / CV Control</div>
+        <div class="flex items-center gap-2"><span class="text-phosphor">●</span> Audio DSP</div>
+      </div>
+
+    </section>
+
+    <!-- ────────────────────────────────────────────────────────────
+         VIEW 2 : PROJECTS DIRECTORY
+         ──────────────────────────────────────────────────────────── -->
+    <section id="projects" data-view="projects" class="view">
+      <div class="mb-10">
+        <p class="font-mono text-xs text-phosphor tracking-widest uppercase mb-2">> /projects</p>
+        <h2 class="font-display font-bold text-3xl sm:text-4xl">Hardware Module Directory</h2>
+        <p class="text-solder mt-2 max-w-2xl">
+          Every module here is designed, breadboarded, and debugged by hand.
+          Select a card to open the full engineering case study.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-6">
+
+        <!-- Card 1 → routes to project-1 -->
+        <article
+          class="module-card"
+          data-target="project-1"
+          data-route="#/project-1"
+          role="button"
+          tabindex="0"
+          aria-label="Open case study: 4 Step Sequencer"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <span class="font-mono text-[10px] tracking-widest text-solder border border-solder/40 rounded px-2 py-1">MOD-01</span>
+            <span class="font-mono text-[10px] tracking-widest text-phosphor flex items-center gap-1">
+              <span class="status-dot"></span> LIVE
+            </span>
+          </div>
+          <h3 class="font-display font-semibold text-xl flex items-center justify-between group">
+            4 Step Sequencer
+            <i class="ph ph-arrow-up-right text-solder group-hover:text-copper transition-colors duration-150"></i>
+          </h3>
+          <p class="text-solder text-sm mt-2 leading-relaxed">
+            4 step sequencer that generates sine, triangle, sawtooth, and square waveforms at 48 kHz sample rate.
+          </p>
+          <div class="flex flex-wrap gap-2 mt-5">
+            <span class="tech-badge">C++</span>
+            <span class="tech-badge">NANO</span>
+            <span class="tech-badge">PYTHON</span>
+          </div>
+          <!-- Audio demo player -->
+          <div class="audio-player mt-4">
+            <span class="demo-badge">AUDIO</span>
+            <audio controls preload="none" src="assets/demo4step.mp3"></audio>
+          </div>
+          <!-- Repo / link -->
+          <a
+            href="https://github.com/barlas123321/nano-synth/"
+            data-repo
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-ghost font-mono text-xs tracking-widest uppercase mt-3"
+          >
+            <i class="ph ph-github-logo"></i>·Repo
+            <span class="text-solder/50 ml-1">·nano-synth</span>
+          </a>
+        </article>
+
+        <!-- Card 2 → routes to project-2 -->
+        <article
+          class="module-card"
+          data-target="project-2"
+          data-route="#/project-2"
+          role="button"
+          tabindex="0"
+          aria-label="Open case study: myOS Kernel"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <span class="font-mono text-[10px] tracking-widest text-solder border border-solder/40 rounded px-2 py-1">OS-01</span>
+            <span class="font-mono text-[10px] tracking-widest text-phosphor flex items-center gap-1">
+              <span class="status-dot"></span> LIVE
+            </span>
+          </div>
+          <h3 class="font-display font-semibold text-xl flex items-center justify-between group">
+            myOS — Kernel Project
+            <i class="ph ph-arrow-up-right text-solder group-hover:text-copper transition-colors duration-150"></i>
+          </h3>
+          <p class="text-solder text-sm mt-2 leading-relaxed">
+            Custom x86 kernel written from scratch w/ grub bootloader, GDT setup,
+            and protected-mode entry. Headers and linker script entirely written from scratch.
+          </p>
+          <div class="flex flex-wrap gap-2 mt-5">
+            <span class="tech-badge">C++</span>
+            <span class="tech-badge">x86 ASM</span>
+            <span class="tech-badge">GDT</span>
+          </div>
+          <!-- Screenshot placeholder -->
+          <div class="demo-placeholder mt-10 h-24 p-0 overflow-hidden">
+            <img
+              src="assets/myOS.png"
+              alt="OS screenshot"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <!-- Repo / link -->
+          <a
+            href="https://github.com/barlas123321/myOS"
+            data-repo
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-ghost font-mono text-xs tracking-widest uppercase mt-3"
+          >
+            <i class="ph ph-github-logo"></i> ·Repo
+            <span class="text-solder/50 ml-1">·myOS</span>
+          </a>
+        </article>
+
+        <!-- Card 3 → prototype, docs pending -->
+        <article class="module-card opacity-70 select-none" aria-disabled="true">
+          <div class="flex items-center justify-between mb-4">
+            <span class="font-mono text-[10px] tracking-widest text-solder border border-solder/40 rounded px-2 py-1">MOD-03</span>
+            <span class="font-mono text-[10px] tracking-widest text-solder border border-solder/40 rounded px-2 py-1">PROTO</span>
+          </div>
+          <h3 class="font-display font-semibold text-xl">Audio DSP - Delay Pedal</h3>
+          <p class="text-solder text-sm mt-2 leading-relaxed">
+            Prototype of a digital delay pedal with adjustable delay time, 
+            feedback, and level using an Arduino Nano and a 12-bit DAC. 
+            The pedal processes audio signals in real-time, allowing for various delay effects.
+          </p>
+          <div class="flex flex-wrap gap-2 mt-5">
+            <span class="tech-badge">Arduino Nano</span>
+            <span class="tech-badge">Python</span>
+            <span class="tech-badge">12-bit DAC</span>
+          </div>
+        </article>
+
+        <!-- Card 4 → placeholder for next module -->
+        <article class="module-card border-dashed !bg-transparent flex items-center justify-center min-h-[180px]">
+          <p class="font-mono text-xs text-solder text-center tracking-widest uppercase leading-relaxed">
+            + Next module slot<br />
+            <span class="text-solder/50">COMING SOON</span>
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ────────────────────────────────────────────────────────────
+         VIEW 3 : PROJECT 1 CASE STUDY — 4 Step Sequencer
+         ──────────────────────────────────────────────────────────── -->
+    <section id="project-1" data-view="project-1" class="view">
+
+      <!-- Back to directory -->
+      <a href="#/projects" data-target="projects" class="btn-ghost font-mono text-xs tracking-widest uppercase mb-8">
+        <i class="ph ph-arrow-left mr-2"></i> Back to Directory
+      </a>
+
+      <p class="font-mono text-xs text-phosphor tracking-widest uppercase mb-2">> /projects/MOD-01</p>
+      <h2 class="font-display font-bold text-3xl sm:text-4xl">4 Step Sequencer</h2>
+
+      <!-- Links / repos -->
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a
+          href="https://github.com/barlas123321/nano-synth"
+          data-repo
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-secondary font-mono text-xs tracking-widest uppercase"
+        >
+          <i class="ph ph-github-logo"></i> GitHub Repo <span class="text-solder/50 ml-1"></span>
+        </a>
+        <a
+          href="#"
+          data-repo
+          class="btn-ghost font-mono text-xs tracking-widest uppercase"
+        >
+          <i class="ph ph-link"></i> Live Demo
+        </a>
+      </div>
+
+      <!-- Overview -->
+      <div class="mt-6 bg-ink border border-solder/25 rounded-lg p-6">
+        <h3 class="font-mono text-xs tracking-widest text-copper uppercase mb-3 font-semibold">// The Engineering Problem</h3>
+        <p class="text-solder leading-relaxed">
+          4 Step sequencer with a 12-bit DAC output. The challenge was to get a noise-free secured output from the Nano module. 
+          This combines physical hardware controlled by potentiometers and a button on an Arduino Nano with a Python-based digital 
+          sound synthesis (DSP) engine. In the system, the Arduino Nano reads data from the potentiometers which determine the frequency, 
+          tempo (BPM), and waveform (sine, triangle, sawtooth, square) of the four melody steps as well as from the start/stop button, 
+          and transmits this data continuously to the computer via the serial port.
+        </p>
+      </div>
+
+      <!-- Code snippet -->
+      <div class="mt-6">
+        <div class="flex items-center justify-between border border-b-0 border-solder/25 rounded-t-lg bg-ink px-4 py-2">
+          <span class="font-mono text-xs text-solder flex items-center gap-2">
+            <i class="ph ph-code text-copper"></i> synth-driver.py
+          </span>
+          <span class="font-mono text-[10px] text-phosphor tracking-widest"></span>
+        </div>
+        <pre class="code-block rounded-b-lg rounded-t-none"><code>// Step sequencer DSP engine (Python)
+if is_running:
+    # Notalar arası pürüzsüz geçiş (Glide/Portamento)
+    current_freq = current_freq + (target_freq - current_freq) * 0.2
+    
+    # Her adımın kaç ses örneği (sample) süreceğini hesapla
+    # (60 saniye / BPM / 2 vuruş) * Örnekleme Hızı
+    samples_per_step = int((60.0 / bpm / 2.0) * SAMPLE_RATE)
+    
+    # Çıkış ses dizisini oluştur
+    out_buffer = np.zeros(frames)
+    
+    for i in range(frames):
+        # Donanımsal saat takibi
+        sample_counter += 1
+        if sample_counter >= samples_per_step:
+            sample_counter = 0
+            current_step = (current_step + 1) % 4
+            
+            # Yeni adımın frekansını güncelle
+            active_pot = step_pots[current_step]
+            target_freq = 100.0 + (active_pot / 1023.0) * 800.0
+</code></pre>
+      </div>
+
+      <!-- Hardware solution -->
+      <div class="mt-6 bg-ink border border-solder/25 rounded-lg p-6">
+        <h3 class="font-mono text-xs tracking-widest text-copper uppercase mb-3 font-semibold">// The Hardware & Software</h3>
+        <ul class="text-solder leading-relaxed space-y-2 text-sm">
+          <li class="flex gap-2"><span class="text-phosphor">▸</span> <span><strong class="text-silk">Arduino Nano</strong> runs the phase accumulator.</span></li>
+          <li class="flex gap-2"><span class="text-phosphor">▸</span> <span><strong class="text-silk">12-bit R-2R ladder DAC</strong> reconstructs the raw digital input.</span></li>
+        </ul>
+      </div>
+
+      <!-- Audio demo + breadboard image — centered -->
+      <div class="mt-6 grid sm:grid-cols-2 gap-6 items-stretch">
+        <figure class="audio-player h-40">
+          <span class="demo-badge">AUDIO</span>
+          <span class="audio-label">4 Step Sequencer Demo</span>
+          <audio controls preload="none" src="demo4step.mp3"></audio>
+          <figcaption class="mt-2 font-mono text-[10px] tracking-widest text-solder uppercase">4 Step Sequencer demo</figcaption>
+        </figure>
+        <div class="flex items-center justify-center">
+          <figure class="inline-block border border-solder/30 bg-ink rounded-lg p-3 mx-auto">
+            <img
+              src="assets/WhatsApp Image 2026-08-16 at 7.39.37 PM (2).jpeg"
+              alt="Fig. 1 — First breadboard revision of the 4 Step Sequencer"
+              class="max-w-80 w-auto h-auto rounded"
+            />
+            <figcaption class="mt-2 font-mono text-[10px] tracking-widest text-solder uppercase text-center">Fig. 1 — First breadboard revision</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <!-- Spec table -->
+      <div class="mt-6 overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="font-mono text-[11px] tracking-widest text-solder uppercase border-b border-solder/25">
+              <th class="text-left py-3 pr-4">Parameter</th>
+              <th class="text-left py-3 pr-4">Value</th>
+              <th class="text-left py-3">Notes</th>
+            </tr>
+          </thead>
+          <tbody class="font-mono text-xs">
+            <tr class="border-b border-solder/20">
+              <td class="py-3 pr-4 text-silk">Sample Rate</td>
+              <td class="py-3 pr-4 text-phosphor">48 kHz</td>
+              <td class="py-3 text-solder">DMA-driven, zero CPU per sample</td>
+            </tr>
+            <tr class="border-b border-solder/20">
+              <td class="py-3 pr-4 text-silk">Frequency Range</td>
+              <td class="py-3 pr-4 text-phosphor">0.001 Hz – 20 kHz</td>
+              <td class="py-3 text-solder">32-bit resolution</td>
+            </tr>
+            <tr>
+              <td class="py-3 pr-4 text-silk">THD+N</td>
+              <td class="py-3 pr-4 text-phosphor">< 0.05%</td>
+              <td class="py-3 text-solder">Measured @ 1 kHz, 0 dBFS</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ────────────────────────────────────────────────────────────
+         VIEW 4 : PROJECT 2 CASE STUDY — myOS Kernel
+         ──────────────────────────────────────────────────────────── -->
+    <section id="project-2" data-view="project-2" class="view">
+
+      <!-- Back to directory -->
+      <a href="#/projects" data-target="projects" class="btn-ghost font-mono text-xs tracking-widest uppercase mb-8">
+        <i class="ph ph-arrow-left mr-2"></i> Back to Directory
+      </a>
+
+      <p class="font-mono text-xs text-phosphor tracking-widest uppercase mb-2">> /projects/myOS</p>
+      <h2 class="font-display font-bold text-3xl sm:text-4xl">myOS — Kernel Project</h2>
+
+      <!-- Links / repos -->
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a
+          href="https://github.com/barlas123321/myOS"
+          data-repo
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-secondary font-mono text-xs tracking-widest uppercase"
+        >
+          <i class="ph ph-github-logo"></i> GitHub Repo <span class="text-solder/50 ml-1"></span>
+        </a>
+      </div>
+
+      <!-- Overview -->
+      <div class="mt-6 bg-ink border border-solder/25 rounded-lg p-6">
+        <h3 class="font-mono text-xs tracking-widest text-copper uppercase mb-3 font-semibold">// Project Overview</h3>
+        <p class="text-solder leading-relaxed">
+          x86 kernel written from scratch.
+          The boot path runs loader.s → gdt.cpp → kernel.cpp, linked by a custom
+          linker script and built with the included Makefile.
+        </p>
+      </div>
+
+      <!-- Code snippet -->
+      <div class="mt-6">
+        <div class="flex items-center justify-between border border-b-0 border-solder/25 rounded-t-lg bg-ink px-4 py-2">
+          <span class="font-mono text-xs text-solder flex items-center gap-2">
+            <i class="ph ph-code text-copper"></i> kernel.cpp
+          </span>
+          <span class="font-mono text-[10px] text-phosphor tracking-widest">i686 · QEMU target</span>
+        </div>
+        <pre class="code-block rounded-b-lg rounded-t-none"><code>#include "types.h"
+#include "gdt.h"
+
+void printf(const int8_t* str)
+{
+        static volatile uint16_t* VideoMemory = (volatile uint16_t*)0xb8000;
+        uint8_t fg = 0x0F; // ön plan beyaz
+        uint8_t bg = 0x00; // arka plan siyah
+        uint16_t color = (bg << 4) | fg;
+
+        for(int i = 0; str[i] != '\0'; ++i)
+                VideoMemory[i] = (color << 8) | str[i];
+}
+
+typedef void(*constructor)();
+extern "C" constructor start_ctors;
+extern "C" constructor end_ctors;
+extern "C" void callConstructors()
+{
+    for(constructor* i = &start_ctors; i != &end_ctors; i++)
+        (*i)();
+}
+
+extern "C" void mainKernel(void* multiboot_structure, uint32_t magicnumber)
+{
+        printf("Hello world! -- bbarlas123321");
+
+        GlobalDescriptorTable gdt;
+
+        while(1);
+}</code></pre>
+      </div>
+
+      <!-- Boot architecture -->
+      <div class="mt-6 bg-ink border border-solder/25 rounded-lg p-6">
+        <h3 class="font-mono text-xs tracking-widest text-copper uppercase mb-3 font-semibold">// Boot Architecture</h3>
+        <ul class="text-solder leading-relaxed space-y-2 text-sm">
+          <li class="flex gap-2"><span class="text-phosphor">▸</span> <span><strong class="text-silk">loader.s</strong> </span></li>
+          <li class="flex gap-2"><span class="text-phosphor">▸</span> <span><strong class="text-silk">gdt.cpp</strong> </span></li>
+          <li class="flex gap-2"><span class="text-phosphor">▸</span> <span><strong class="text-silk">kernel.cpp</strong> </span></li>
+          <li class="flex gap-2"><span class="text-phosphor">▸</span> <span><strong class="text-silk">linker.ld</strong> </span></li>
+        </ul>
+      </div>
+
+      <!-- Image placeholders -->
+      <div class="mt-6 grid sm:grid-cols-1 gap-6">
+        <figure class="img-placeholder h-42 relative p-0 overflow-hidden">
+          <img
+            src="assets/myOS.png"
+            alt="Boot screen capture of myOS"
+            class="w-full h-full object-cover"
+          />
+          <figcaption class="absolute bottom-0 left-0 right-0 px-2 py-1 text-center font-mono text-[10px] tracking-[0.14em] uppercase bg-ink/60 text-solder">Boot screen capture</figcaption>
+        </figure>
+      </div>
+
+    </section>
+
+    <!-- ────────────────────────────────────────────────────────────
+         VIEW 5 : LAB / ABOUT — The Workbench
+         ──────────────────────────────────────────────────────────── -->
+    <section id="lab" data-view="lab" class="view scope-grid">
+      <div class="mb-10">
+        <p class="font-mono text-xs text-phosphor tracking-widest uppercase mb-2">> /lab</p>
+        <h2 class="font-display font-bold text-3xl sm:text-4xl">The Workbench</h2>
+        <p class="text-solder mt-2 max-w-2xl">
+          Signal, solder, and source code. A snapshot of the tools I reach for
+          when a module isn't working, and the theory behind why it should.
+        </p>
+      </div>
+
+      <!-- Skills matrix -->
+      <div class="grid sm:grid-cols-2 gap-6">
+
+        <!-- Systems Architecture -->
+        <div class="bg-ink border border-solder/25 rounded-lg p-6">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="w-8 h-8 rounded-md bg-mask border border-solder/40 flex items-center justify-center text-phosphor"><i class="ph ph-cpu"></i></span>
+            <h3 class="font-display font-semibold">Systems Architecture</h3>
+          </div>
+          <div class="space-y-3">
+            <div>
+              <div class="flex justify-between font-mono text-xs text-solder mb-1"><span>x86 asm</span><span>70%</span></div>
+              <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between font-mono text-xs text-solder mb-1"><span>GDT / IDT</span><span>65%</span></div>
+              <div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between font-mono text-xs text-solder mb-1"><span>Bootloader / Linker</span><span>60%</span></div>
+              <div class="skill-bar"><div class="skill-fill" style="width:60%"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between font-mono text-xs text-solder mb-1"><span>QEMU</span><span>55%</span></div>
+              <div class="skill-bar"><div class="skill-fill" style="width:55%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Languages -->
+        <div class="bg-ink border border-solder/25 rounded-lg p-6">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="w-8 h-8 rounded-md bg-mask border border-solder/40 flex items-center justify-center text-phosphor"><i class="ph ph-code"></i></span>
+            <h3 class="font-display font-semibold">Languages</h3>
+          </div>
+          <div class="space-y-3">
+            <div>
+              <div class="flex justify-between font-mono text-xs text-solder mb-1"><span>C++ / Python</span><span>90%</span></div>
+              <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between font-mono text-xs text-solder mb-1"><span>C#</span><span>75%</span></div>
+              <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between font-mono text-xs text-solder mb-1"><span>Assembly x86</span><span>50%</span></div>
+              <div class="skill-bar"><div class="skill-fill" style="width:50%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Audio -->
+        <div class="bg-ink border border-solder/25 rounded-lg p-6">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="w-8 h-8 rounded-md bg-mask border border-solder/40 flex items-center justify-center text-phosphor"><i class="ph ph-waveform"></i></span>
+            <h3 class="font-display font-semibold">Audio</h3>
+          </div>
+          <div class="space-y-3">
+            <div>
+              <div class="flex justify-between font-mono text-xs text-solder mb-1"><span>MIDI Protocol</span><span>95%</span></div>
+              <div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between font-mono text-xs text-solder mb-1"><span>Audio DSP</span><span>70%</span></div>
+              <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between font-mono text-xs text-solder mb-1"><span>Op-Amp Design</span><span>80%</span></div>
+              <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Applied Math -->
+        <div class="bg-ink border border-solder/25 rounded-lg p-6">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="w-8 h-8 rounded-md bg-mask border border-solder/40 flex items-center justify-center text-phosphor"><i class="ph ph-sigma"></i></span>
+            <h3 class="font-display font-semibold">Applied Math</h3>
+          </div>
+          <div class="space-y-3">
+            <div>
+              <div class="flex justify-between font-mono text-xs text-solder mb-1"><span>Calculus</span><span>85%</span></div>
+              <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between font-mono text-xs text-solder mb-1"><span>Fourier / Laplace</span><span>65%</span></div>
+              <div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between font-mono text-xs text-solder mb-1"><span>Linear Algebra</span><span>70%</span></div>
+              <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Links / repos -->
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a
+          href="https://github.com/barlas123321"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-secondary font-mono text-xs tracking-widest uppercase"
+        >
+          <i class="ph ph-github-logo"></i> GitHub
+        </a>
+        <a
+          href="https://www.linkedin.com/in/barlas-ard%C4%B1%C3%A7-08510b347/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-ghost font-mono text-xs tracking-widest uppercase"
+        >
+          <i class="ph ph-linkedin-logo"></i> LinkedIn
+        </a>
+        <a
+          href="https://www.youtube.com/@barlasardic"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-ghost font-mono text-xs tracking-widest uppercase"
+        >
+          <i class="ph ph-youtube-logo"></i> YouTube
+        </a>
+        <a
+          href="mailto:barlasardic@hotmail.com"
+          class="btn-ghost font-mono text-xs tracking-widest uppercase"
+        >
+          <i class="ph ph-envelope-simple"></i> Contact
+        </a>
+      </div>
+
+      <!-- Engineering Philosophy -->
+      <div class="mt-6 bg-ink border border-copper/40 rounded-lg p-8 relative overflow-hidden">
+        <span class="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-copper via-phosphor to-transparent"></span>
+        <h3 class="font-mono text-xs tracking-widest text-copper uppercase mb-4 font-semibold">// My Outlook</h3>
+        <p class="text-silk leading-relaxed text-lg">
+          Software DAWs are convenient but <span class="text-copper font-medium">knobs, jacks, and voltages</span>
+          are the ones that makes us feel the sound. I build physical instruments because a
+          circuit is just code you can touch. When a module misbehaves, all you got is your bare hands and a multimeter to debug it. That's the spirit of the engineering to me.
+        </p>
+        <p class="text-solder mt-4 leading-relaxed">
+          Every project starts on the breadboard, gets worked on the bench, and only
+          earns a life once it can't be disassembled any further. I care about the signal path from the
+          DAC pin to the output jack and the noise that I make.
+        </p>
+      </div>
+    </section>
+
+    <!-- ────────────────────────────────────────────────────────────
+         VIEW 6 : 404 — SIGNAL LOST (unknown route)
+         ──────────────────────────────────────────────────────────── -->
+    <section id="err404" data-view="404" class="view">
+      <div class="error-terminal max-w-lg mx-auto text-center px-8 py-14">
+        <p class="font-mono text-xs tracking-[0.18em] text-copper uppercase mb-3">// error 404</p>
+        <h2 class="font-mono font-bold text-6xl sm:text-7xl text-copper mb-3">404</h2>
+        <div class="trace my-6" aria-hidden="true"></div>
+        <p class="font-mono text-sm text-phosphor tracking-widest uppercase mb-3">
+          Signal lost — route not registered in the system
+        </p>
+        <p class="text-solder text-sm leading-relaxed mb-8 max-w-md mx-auto">
+          The address you were probing doesn't exist on this board. No traceback found —
+          patch back into a known signal below.
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-4">
+          <a href="#/projects" data-target="projects" class="btn-primary font-mono text-sm tracking-widest uppercase">
+            Back to Projects
+          </a>
+          <a href="#/home" data-target="home" class="btn-secondary font-mono text-sm tracking-widest uppercase">
+            Home
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       GLOBAL FOOTER — always visible
+       ══════════════════════════════════════════════════════════════ -->
+  <footer class="border-t border-solder/25 bg-mask/90 backdrop-blur-md">
+    <div class="max-w-6xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="font-mono text-xs text-solder">
+        © 2026 <span class="text-silk">Barlas Ardıç</span> — Built on the bench.
+      </p>
+      <div class="flex items-center gap-3">
+        <a href="https://github.com/barlas123321" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
+          <i class="ph ph-github-logo text-lg"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/barlas-ard%C4%B1%C3%A7-08510b347/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+          <i class="ph ph-linkedin-logo text-lg"></i>
+        </a>
+        <a href="https://www.youtube.com/@barlasardic" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="YouTube">
+          <i class="ph ph-youtube-logo text-lg"></i>
+        </a>
+        <a href="mailto:barlasardic@hotmail.com" class="social-link" aria-label="Email">
+          <i class="ph ph-envelope-simple text-lg"></i>
+        </a>
+      </div>
+      <p class="font-mono text-[10px] text-solder tracking-widest uppercase flex items-center gap-2">
+        <span class="status-dot"></span> System nominal
+      </p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

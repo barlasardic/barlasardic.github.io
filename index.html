@@ -7,7 +7,7 @@
   <meta name="description" content="Portfolio of Barlas Ardıç — embedded systems, analog audio circuits, and music hardware." />
   <link rel="icon" type="image/png" href="assets/pcbbb.png" />
 
-  <!-- Google Fonts: IBM Plex Mono (firmware voice) — body/display uses Helvetica system stack -->
+  <!-- Google Fonts: IBM Plex Mono (firmware voice) body/display uses Helvetica system stack -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -50,9 +50,7 @@
 
 <body class="bg-mask text-silk font-display min-h-screen flex flex-col">
 
-  <!-- ══════════════════════════════════════════════════════════════
-       GLOBAL HEADER — sticky, always visible
-       ══════════════════════════════════════════════════════════════ -->
+  <!-- GLOBAL HEADER -->
   <header class="sticky top-0 z-50 bg-mask/90 backdrop-blur-md border-b border-solder/25">
     <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
 
@@ -93,14 +91,10 @@
     </div>
   </header>
 
-  <!-- ══════════════════════════════════════════════════════════════
-       MAIN CONTENT — SPA views (only one visible at a time)
-       ══════════════════════════════════════════════════════════════ -->
+  <!-- MAIN CONTENT — SPA views (only one visible at a time)-->
   <main class="flex-1 w-full max-w-6xl mx-auto px-6 py-12">
 
-    <!-- ────────────────────────────────────────────────────────────
-         VIEW 1 : HOME — the signal chain (IN → PROCESS → OUT)
-         ──────────────────────────────────────────────────────────── -->
+    <!-- VIEW 1 : HOME — the signal chain (IN → PROCESS → OUT)-->
     <section id="home" data-view="home" class="view">
       <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
@@ -173,9 +167,7 @@
 
     </section>
 
-    <!-- ────────────────────────────────────────────────────────────
-         VIEW 2 : PROJECTS DIRECTORY
-         ──────────────────────────────────────────────────────────── -->
+    <!-- VIEW 2 : PROJECTS DIRECTORY-->
     <section id="projects" data-view="projects" class="view">
       <div class="mb-10">
         <p class="font-mono text-xs text-phosphor tracking-widest uppercase mb-2">> /projects</p>
@@ -311,9 +303,7 @@
       </div>
     </section>
 
-    <!-- ────────────────────────────────────────────────────────────
-         VIEW 3 : PROJECT 1 CASE STUDY — 4 Step Sequencer
-         ──────────────────────────────────────────────────────────── -->
+    <!-- VIEW 3 : PROJECT 1 CASE STUDY — 4 Step Sequencer-->
     <section id="project-1" data-view="project-1" class="view">
 
       <!-- Back to directory -->
@@ -449,9 +439,7 @@ if is_running:
       </div>
     </section>
 
-    <!-- ────────────────────────────────────────────────────────────
-         VIEW 4 : PROJECT 2 CASE STUDY — myOS Kernel
-         ──────────────────────────────────────────────────────────── -->
+    <!-- VIEW 4 : PROJECT 2 CASE STUDY — myOS Kernel -->
     <section id="project-2" data-view="project-2" class="view">
 
       <!-- Back to directory -->
@@ -551,9 +539,7 @@ extern "C" void mainKernel(void* multiboot_structure, uint32_t magicnumber)
 
     </section>
 
-    <!-- ────────────────────────────────────────────────────────────
-         VIEW 5 : LAB / ABOUT — The Workbench
-         ──────────────────────────────────────────────────────────── -->
+    <!-- VIEW 5 : LAB / ABOUT — The Workbench -->
     <section id="lab" data-view="lab" class="view scope-grid">
       <div class="mb-10">
         <p class="font-mono text-xs text-phosphor tracking-widest uppercase mb-2">> /lab</p>

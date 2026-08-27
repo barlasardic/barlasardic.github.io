@@ -5,6 +5,7 @@
    - #/projects   → Projects Directory
    - #/project-1  → Project 1 (4 Step Sequencer)
    - #/project-2  → Project 2 (myOS Kernel)
+   - #/project-3  → Project 3 (APP-01 Placeholder)
    - #/lab        → Lab / About
    - anything else → 404 view ("Signal lost")
 
@@ -27,6 +28,7 @@
     'projects': 'projects',
     'project-1': 'project-1',
     'project-2': 'project-2',
+    'project-3': 'project-3',
     'lab': 'lab'
   };
 

@@ -333,7 +333,55 @@
           </div>
         </article>
 
-        <!-- Card 4 → placeholder for next module -->
+        <!-- Card 4 → APP-01 LIVE with example1.png -->
+        <article
+          class="module-card"
+          data-target="project-3"
+          data-route="#/project-3"
+          role="button"
+          tabindex="0"
+          aria-label="Open case study: Project Title Placeholder"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <span class="font-mono text-[10px] tracking-widest text-solder border border-solder/40 rounded px-2 py-1">APP-01</span>
+            <span class="font-mono text-[10px] tracking-widest text-phosphor flex items-center gap-1">
+              <span class="status-dot"></span> LIVE
+            </span>
+          </div>
+          <h3 class="font-display font-semibold text-xl flex items-center justify-between group">
+            Project Title Placeholder
+            <i class="ph ph-arrow-up-right text-solder group-hover:text-copper transition-colors duration-150"></i>
+          </h3>
+          <p class="text-solder text-sm mt-2 leading-relaxed">
+            Placeholder description — replace with real project details. Short, bench-style summary that matches the tone of other modules.
+          </p>
+          <div class="flex flex-wrap gap-2 mt-5">
+            <span class="tech-badge">PLACEHOLDER</span>
+            <span class="tech-badge">WIP</span>
+            <span class="tech-badge">TBD</span>
+          </div>
+          <!-- Screenshot -->
+          <div class="demo-placeholder mt-10 h-24 p-0 overflow-hidden">
+            <img
+              src="assets/example1.png"
+              alt="Project placeholder screenshot"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <!-- Repo / link -->
+          <a
+            href="#"
+            data-repo
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-ghost font-mono text-xs tracking-widest uppercase mt-3"
+          >
+            <i class="ph ph-github-logo"></i> ·Repo
+            <span class="text-solder/50 ml-1">·placeholder</span>
+          </a>
+        </article>
+
+        <!-- Card 5 → placeholder for next module (moved down) -->
         <article class="module-card border-dashed !bg-transparent flex items-center justify-center min-h-[180px]">
           <p class="font-mono text-xs text-solder text-center tracking-widest uppercase leading-relaxed">
             + Next module slot<br />
@@ -579,7 +627,122 @@ extern "C" void mainKernel(void* multiboot_structure, uint32_t magicnumber)
 
     </section>
 
-    <!-- VIEW 5 : LAB / ABOUT — The Workbench -->
+    <!-- VIEW 5 : PROJECT 3 CASE STUDY — APP-01 Placeholder -->
+    <section id="project-3" data-view="project-3" class="view">
+
+      <!-- Back to directory -->
+      <a href="#/projects" data-target="projects" class="btn-ghost font-mono text-xs tracking-widest uppercase mb-8">
+        <i class="ph ph-arrow-left mr-2"></i> Back to Directory
+      </a>
+
+      <p class="font-mono text-xs text-phosphor tracking-widest uppercase mb-2">> /projects/APP-01</p>
+      <h2 class="font-display font-bold text-3xl sm:text-4xl">Project Title Placeholder</h2>
+
+      <!-- Links / repos -->
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a
+          href="#"
+          data-repo
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-secondary font-mono text-xs tracking-widest uppercase"
+        >
+          <i class="ph ph-github-logo"></i> GitHub Repo <span class="text-solder/50 ml-1">·placeholder</span>
+        </a>
+        <a
+          href="#"
+          data-repo
+          class="btn-ghost font-mono text-xs tracking-widest uppercase"
+        >
+          <i class="ph ph-link"></i> Live Demo
+        </a>
+      </div>
+
+      <!-- Overview -->
+      <div class="mt-6 bg-ink border border-solder/25 rounded-lg p-6">
+        <h3 class="font-mono text-xs tracking-widest text-copper uppercase mb-3 font-semibold">// Project Overview</h3>
+        <p class="text-solder leading-relaxed">
+          Placeholder overview — replace with real project details. This section follows the same bench-style as the other case studies.
+          Describe the engineering problem, signal chain, and design goals here. Keep it concise yet technical, matching the tone of MOD-01 and OS-01.
+        </p>
+      </div>
+
+      <!-- Code snippet -->
+      <div class="mt-6">
+        <div class="flex items-center justify-between border border-b-0 border-solder/25 rounded-t-lg bg-ink px-4 py-2">
+          <span class="font-mono text-xs text-solder flex items-center gap-2">
+            <i class="ph ph-code text-copper"></i> placeholder.cpp
+          </span>
+          <span class="font-mono text-[10px] text-phosphor tracking-widest">PLACEHOLDER</span>
+        </div>
+        <pre class="code-block rounded-b-lg rounded-t-none"><code>// Placeholder code — replace with real firmware / DSP snippet
+#include "placeholder.h"
+
+void setup() {
+    // TODO: init hardware, configure pins, start serial
+}
+
+void loop() {
+    // TODO: read sensors, process signal, output via DAC
+    // placeholder — keep structure identical to project-1 / project-2
+}
+</code></pre>
+      </div>
+
+      <!-- Hardware solution -->
+      <div class="mt-6 bg-ink border border-solder/25 rounded-lg p-6">
+        <h3 class="font-mono text-xs tracking-widest text-copper uppercase mb-3 font-semibold">// The Hardware & Software</h3>
+        <ul class="text-solder leading-relaxed space-y-2 text-sm">
+          <li class="flex gap-2"><span class="text-phosphor">▸</span> <span><strong class="text-silk">PLACEHOLDER</strong> — replace with real component / architecture detail.</span></li>
+          <li class="flex gap-2"><span class="text-phosphor">▸</span> <span><strong class="text-silk">WIP</strong> — placeholder for signal chain / block diagram notes.</span></li>
+          <li class="flex gap-2"><span class="text-phosphor">▸</span> <span><strong class="text-silk">TBD</strong> — placeholder for firmware / toolchain notes.</span></li>
+        </ul>
+      </div>
+
+      <!-- Image -->
+      <div class="mt-6 grid sm:grid-cols-1 gap-6">
+        <figure class="img-placeholder h-42 relative p-0 overflow-hidden">
+          <img
+            src="assets/example1.png"
+            alt="APP-01 placeholder screenshot"
+            class="w-full h-full object-cover"
+          />
+          <figcaption class="absolute bottom-0 left-0 right-0 px-2 py-1 text-center font-mono text-[10px] tracking-[0.14em] uppercase bg-ink/60 text-solder">Fig. 1 — Placeholder capture (example1.png)</figcaption>
+        </figure>
+      </div>
+
+      <!-- Spec table -->
+      <div class="mt-6 overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="font-mono text-[11px] tracking-widest text-solder uppercase border-b border-solder/25">
+              <th class="text-left py-3 pr-4">Parameter</th>
+              <th class="text-left py-3 pr-4">Value</th>
+              <th class="text-left py-3">Notes</th>
+            </tr>
+          </thead>
+          <tbody class="font-mono text-xs">
+            <tr class="border-b border-solder/20">
+              <td class="py-3 pr-4 text-silk">Placeholder Param</td>
+              <td class="py-3 pr-4 text-phosphor">—</td>
+              <td class="py-3 text-solder">Replace with real spec</td>
+            </tr>
+            <tr class="border-b border-solder/20">
+              <td class="py-3 pr-4 text-silk">Placeholder Param</td>
+              <td class="py-3 pr-4 text-phosphor">—</td>
+              <td class="py-3 text-solder">Replace with real spec</td>
+            </tr>
+            <tr>
+              <td class="py-3 pr-4 text-silk">Placeholder Param</td>
+              <td class="py-3 pr-4 text-phosphor">—</td>
+              <td class="py-3 text-solder">Replace with real spec</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- VIEW 6 : LAB / ABOUT — The Workbench -->
     <section id="lab" data-view="lab" class="view scope-grid">
       <div class="mb-10">
         <p class="font-mono text-xs text-phosphor tracking-widest uppercase mb-2">> /lab</p>
@@ -737,7 +900,7 @@ extern "C" void mainKernel(void* multiboot_structure, uint32_t magicnumber)
       </div>
     </section>
 
-    <!--  VIEW 6 : 404 — SIGNAL LOST (unknown route)-->
+    <!--  VIEW 7 : 404 — SIGNAL LOST (unknown route)-->
     <section id="err404" data-view="404" class="view">
       <div class="error-terminal max-w-lg mx-auto text-center px-8 py-14">
         <p class="font-mono text-xs tracking-[0.18em] text-copper uppercase mb-3">// error 404</p>

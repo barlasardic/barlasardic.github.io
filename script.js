@@ -17,9 +17,12 @@
   'use strict';
 
   /* ─── DOM references ─────────────────────────────────────────── */
-  const views = document.querySelectorAll('[data-view]');
   const DEFAULT_VIEW = 'home';
   const NOT_FOUND_VIEW = '404';
+
+  function getViews() {
+    return document.querySelectorAll('[data-view]');
+  }
 
   /* ─── Route table ────────────────────────────────────────────── */
   // Maps a hash path (without the leading '#') to a view id.
@@ -40,8 +43,9 @@
    */
   function getCurrentRoute() {
     const hash = window.location.hash.replace(/^#/, '');
-    const path = hash.split('?')[0]; // strip any query part
-    return path === '' ? 'home' : path.replace(/^\/+/, '');
+    const path = hash.split('?')[0].split('#')[0]; // strip any query part
+    const cleaned = path.replace(/^\/+/, '').replace(/\/+$/, '').trim();
+    return cleaned === '' ? 'home' : cleaned.toLowerCase();
   }
 
   /**
@@ -72,7 +76,7 @@
     pauseAllAudio();
 
     // Deactivate all views
-    views.forEach((view) => {
+    getViews().forEach((view) => {
       view.classList.remove('active');
     });
 
